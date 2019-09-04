@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	_ "net/http/pprof"
 
 	"github.com/portainer/agent"
 	"github.com/portainer/agent/crypto"
