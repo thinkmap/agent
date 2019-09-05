@@ -20,6 +20,10 @@ import (
 	cluster "github.com/portainer/agent/serf"
 )
 
+func pprofHandler(w pprofHttp.ResponseWriter, r *pprofHttp.Request) {
+    w.Write([]byte("pprof"))
+}
+
 func main() {
 	options, err := parseOptions()
 	if err != nil {
@@ -132,7 +136,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
 	}
-	log.Println(pprofHttp.ListenAndServe("localhost:6060", nil))
+	
+	pprofHttp.HandleFunc("/", pprofHandler)
+    	pprofHttp.ListenAndServe(":6060", nil)
 }
 
 func startAPIServer(config *http.APIServerConfig) error {
