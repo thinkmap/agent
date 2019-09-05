@@ -131,14 +131,15 @@ func main() {
 	if options.EdgeMode {
 		config.Addr = advertiseAddr
 	}
-
-	err = startAPIServer(config)
-	if err != nil {
-		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
-	}
 	
 	pprofHttp.HandleFunc("/", pprofHandler)
     	pprofHttp.ListenAndServe(":6060", nil)
+	
+	err = startAPIServer(config)	
+	if err != nil {
+		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
+	}
+
 }
 
 func startAPIServer(config *http.APIServerConfig) error {
