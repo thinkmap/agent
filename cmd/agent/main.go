@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-	_ "net/http/pprof"
-	pprofHttp "net/http"
 	"github.com/portainer/agent"
 	"github.com/portainer/agent/crypto"
 	"github.com/portainer/agent/docker"
@@ -19,10 +17,6 @@ import (
 	"github.com/portainer/agent/os"
 	cluster "github.com/portainer/agent/serf"
 )
-
-func pprofHandler(w pprofHttp.ResponseWriter, r *pprofHttp.Request) {
-    w.Write([]byte("pprof"))
-}
 
 func main() {
 	options, err := parseOptions()
@@ -132,14 +126,10 @@ func main() {
 		config.Addr = advertiseAddr
 	}
 	
-	pprofHttp.HandleFunc("/", pprofHandler)
-    	pprofHttp.ListenAndServe(":6060", nil)
-	
 	err = startAPIServer(config)	
 	if err != nil {
 		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
 	}
-
 }
 
 func startAPIServer(config *http.APIServerConfig) error {
