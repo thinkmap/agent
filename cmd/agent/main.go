@@ -132,8 +132,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
 	}
-	
-	pprofHttp.ListenAndServe("localhost:6060", nil)
+	log.Println(pprofHttp.ListenAndServe("localhost:6060", nil))
 }
 
 func startAPIServer(config *http.APIServerConfig) error {
