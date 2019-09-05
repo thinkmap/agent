@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 	_ "net/http/pprof"
-
+	pprofHttp "net/http"
 	"github.com/portainer/agent"
 	"github.com/portainer/agent/crypto"
 	"github.com/portainer/agent/docker"
@@ -133,7 +133,7 @@ func main() {
 		log.Fatalf("[ERROR] [main,http] [message: Unable to start Agent API server] [error: %s]", err)
 	}
 	
-	http.ListenAndServe("localhost:6060", nil)
+	pprofHttp.ListenAndServe("localhost:6060", nil)
 }
 
 func startAPIServer(config *http.APIServerConfig) error {
